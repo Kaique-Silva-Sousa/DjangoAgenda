@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block titulo %} Login | {%endblock%}
+{% block 'conteudo' %}
+<h1 class="mt-3 mb-3">Login</h1>
+
+{% if not user.is_authenticated %}
+
+<form method="POST" action="{% url 'login' %}">
+    {% include 'parciais/_messages.html' %}
+    {% csrf_token %}
+  <div class="form-group">
+    <label>Usuario</label>
+    <input type="text" name="usuario" class="form-control" value="{{request.POST.usuario}}" placeholder="Usuario">
+  </div>
+
+    <div class="form-group">
+    <label>Senha</label>
+    <input type="password" name="senha" class="form-control" placeholder="Senha">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Sign-in</button>
+  <br><a href="{% url 'cadastro' %}">Clique aqui para se cadastrar</a>
+</form>
+
+{% else %}
+  <p>Voce ja está logado com o usuario {{user}}</p>
+  <a href="{% url 'logout' %}">Clique aqui</a> para deslogar
+{%endif%}
+{% endblock %}
